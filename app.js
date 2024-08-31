@@ -432,7 +432,7 @@ app.post("/get-report-content", async(req,res) => {
     }
 });
 
-app.listen(5002, () => { console.log("Runned") });
+app.listen(8080, () => { console.log("Runned") });
 
 //npx nodemon app quando for rodar
 //          No Video        Eu

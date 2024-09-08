@@ -33,7 +33,7 @@ app.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ email: email });
 
     if(oldUser){
-        return res.send({ data: "User already exists!" });
+        return res.send({ data: "Usuário já existe!" });
     }
 
     const encryptedPassword = await bcrypt.hash(password,10);
@@ -46,7 +46,7 @@ app.post("/register", async (req, res) => {
             password: encryptedPassword,
             userType: userType,
         });
-        res.send({ status: "ok", data: "User Created" });
+        res.send({ status: "ok", data: "Usuário criado" });
     }catch(error){
         res.send({ status: "error", data: error });
     };
@@ -54,9 +54,10 @@ app.post("/register", async (req, res) => {
 
 app.post("/login-user", async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
+
     const oldUser = await User.findOne({ email: email });
-  
+    console.log(email);
+    
     if (!oldUser) {
       return res.send({ data: "Usuário não encontrado" });
     }
@@ -77,6 +78,13 @@ app.post("/login-user", async (req, res) => {
             userType: oldUser.userType,
          });
       }
+    }
+    else{
+        return res.send({ 
+            status: 'error', 
+            data: "Senha incorreta",
+            userType: oldUser.userType,
+         });
     }
   });
 
@@ -112,7 +120,7 @@ app.post("/update-user", async (req, res) => {
             },
         }
         );
-        res.send({status:"Ok",data:"Updated"})
+        res.send({status:"Ok",data:"Usuário atualizado"})
     } catch (error) {
         return res.send({ error: error });
     }
@@ -131,7 +139,7 @@ app.post("/delete-user",async (req, res) => {
     const {id}=req.body;
     try {
     await User.deleteOne({_id:id});
-    res.send({status:"Ok",data:"User Deleted"});
+    res.send({status:"Ok",data:"Usuário removido"});
     } catch (error) {
     return res.send({ error: error });
 
@@ -246,7 +254,7 @@ app.post("/delete-class",async (req, res) => {
     const {id}=req.body;
     try {
     await Class.deleteOne({_id:id});
-    res.send({status:"Ok",data:"Classe removida"});
+    res.send({status:"Ok",data:"Aula removida"});
     } catch (error) {
     return res.send({ error: error });
     }
